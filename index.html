@@ -11,6 +11,13 @@
 <body>
 
   <div id="root"></div>
+  </br>
+  </br>
+  <div id="productName"></div>
+  <div id="os"></div>
+  <div id="deviceName"></div>
+  <div id="DeviceType"></div>
+  <div id="Browser"></div>
 
 </body>
 
@@ -28,6 +35,90 @@
   console.log(data);
 
   div.innerText = JSON.stringify(data);
+
+  let pn = document.getElementById('productName')
+  let os = document.getElementById('os')
+  let dn = document.getElementById('deviceName')
+  let dt = document.getElementById('DeviceType')
+  let br = document.getElementById('Browser')
+
+  pn.innerText = "Product Name: " + getProductName()
+  os.innerText = "Operating System: " + getOS()
+  dn.innerText = "Device Name: " + getDeviceName()
+  br.innerText = "Browser: " + getBrowserType()
+  dt.innerText = "Device Type: " + getDeviceType()
+
+
+  function getBrowserType() {
+    var isEdge = navigator.userAgent.indexOf(' Edge') >= 0;
+    var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0; // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+    var isFirefox = typeof InstallTrigger !== 'undefined'; // Firefox 1.0+
+    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent); // negative look-around to exclude Chrome, Edge, and all Android browsers that include the Safari name in their user agent
+    var isChrome = !!window.chrome && !isOpera && !isEdge; // Chrome 1+
+    var isIE = /*@cc_on!@*/ false || !!document.documentMode; // At least IE6
+    if (isChrome) {
+      return "Chrome";
+    } else if (isIE) {
+      return "Internet Explorer";
+    } else if (isFirefox) {
+      return "Firefox";
+    } else if (isSafari) {
+      return "Safari";
+    } else if (isOpera) {
+      return "Opera";
+    } else if (isEdge) {
+      return "Edge";
+    } else {
+      return "Unknown";
+    }
+  }
+
+
+  function getDeviceType() {
+    var ua = navigator.userAgent.toLowerCase();
+    if (/(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(ua)) {
+      return 'Tablet';
+    } else if (/(mobi|ipod|phone|blackberry|opera mini|fennec|minimo|symbian|psp|nintendo ds|archos|skyfire|puffin|blazer|bolt|gobrowser|iris|maemo|semc|teashark|uzard)/.test(ua)) {
+      return 'Phone';
+    } else {
+      return 'Desktop';
+    }
+  }
+
+  function getProductName() {
+    if (navigator.appVersion.indexOf("iPhone") !== -1 || navigator.appVersion.indexOf("iPad") !== -1 || navigator.appVersion.indexOf("Macintosh") !== -1) return 'Apple'
+    if (navigator.appVersion.indexOf("Android") !== -1) {
+      let productName = navigator.userAgent.split('; ')[2].split(')')[0].split(' ').shift()
+      return productName;
+    }
+    if (navigator.appVersion.indexOf("Android") === -1) return 'unknown';
+  }
+  function getDeviceName() {
+    if (navigator.appVersion.indexOf("Android") === -1) return 'unknown'
+    if (navigator.appVersion.indexOf("iPhone") !== -1) return 'iPhone'
+    if (navigator.appVersion.indexOf("iPad") !== -1) return 'iPad'
+    if (navigator.appVersion.indexOf("Android") !== -1) {
+      let deviceName = navigator.userAgent.split('; ')[2].split(')')[0].split(' ')
+      let removedPD = deviceName.shift()
+      deviceName = deviceName.join(" ")
+      return deviceName
+    }
+  }
+
+  function getOS() {
+    var os = 'unknown';
+    if (navigator.appVersion.indexOf("Win") != -1) os = "Windows";
+    if (navigator.appVersion.indexOf("Mac") != -1) os = "MacOS";
+    if (navigator.appVersion.indexOf("iPhone") != -1 || navigator.appVersion.indexOf("iPad") != -1) os = "iOS";
+    if (navigator.appVersion.indexOf("X11") != -1) os = "UNIX";
+    if (navigator.appVersion.indexOf("Linux") != -1) os = "Linux";
+    if (navigator.appVersion.indexOf("Android") != -1) os = "Android";
+    return os
+  }
+
+
+
+
 </script>
 
 </html>
