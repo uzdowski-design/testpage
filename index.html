@@ -54,8 +54,9 @@
     var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0; // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
     var isFirefox = typeof InstallTrigger !== 'undefined'; // Firefox 1.0+
     var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent); // negative look-around to exclude Chrome, Edge, and all Android browsers that include the Safari name in their user agent
-    var isSamsungBrowser = /^((?!chrome|android|safari).)*samsungbrowser/i.test(navigator.userAgent); // negative look-around to detect Samsung Browser
-    var isChrome = !!window.chrome && !isOpera && !isEdge; // Chrome 1+
+    // var isSamsungBrowser = /^((?!chrome|android|safari).)*samsungbrowser/i.test(navigator.userAgent); // negative look-around to detect Samsung Browser
+    var isSamsungBrowser = navigator.userAgent.indexOf(' SamsungBrowser') >= 0
+    var isChrome = !!window.chrome && !isOpera && !isEdge && !isSamsungBrowser; // Chrome 1+
     var isIE = /*@cc_on!@*/ false || !!document.documentMode; // At least IE6
     if (isChrome) {
       return "Chrome";
